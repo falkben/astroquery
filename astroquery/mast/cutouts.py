@@ -217,7 +217,7 @@ class TesscutClass(MastQueryWithLogin):
         if sector:
             astrocut_request += "&sector={}".format(sector)
 
-        astrocut_url = self._service_api_connection.REQUEST_URL + "astrocut?" + astrocut_request
+        astrocut_url = self._service_api_connection.REQUEST_URL + "astrocut/?" + astrocut_request
         zipfile_path = "{}tesscut_{}.zip".format(path, time.strftime("%Y%m%d%H%M%S"))
         self._download_file(astrocut_url, zipfile_path)
 
