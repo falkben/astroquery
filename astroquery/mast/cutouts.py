@@ -102,9 +102,9 @@ class TesscutClass(MastQueryWithLogin):
 
         super().__init__()
 
-        services = {"sector": {"path": "sector"},
-                    "astrocut": {"path": "astrocut"}}
-        self._service_api_connection.set_service_params(services, "tesscut")
+        services = {"sector": {"path": "sector/"},
+                    "astrocut": {"path": "astrocut/"}}
+        self._service_api_connection.set_service_params(services, "fastapi/tesscut")
 
     def get_sectors(self, coordinates=None, radius=0.2*u.deg, objectname=None):
         """
