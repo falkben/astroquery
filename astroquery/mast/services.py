@@ -138,7 +138,7 @@ class ServiceAPI(BaseQuery):
         self.SERVICES = service_dict
 
     def _request(self, method, url, params=None, data=None, headers=None,
-                 files=None, stream=False, auth=None, cache=False):
+                 files=None, stream=False, auth=None, cache=False, json=None):
         """
         Override of the parent method:
         A generic HTTP request method, similar to `~requests.Session.request`
@@ -157,6 +157,7 @@ class ServiceAPI(BaseQuery):
         url : str
         params : None or dict
         data : None or dict
+        json: None or dict
         headers : None or dict
         auth : None or dict
         files : None or dict
@@ -174,7 +175,7 @@ class ServiceAPI(BaseQuery):
         start_time = time.time()
 
         response = super()._request(method, url, params=params, data=data, headers=headers,
-                                    files=files, cache=cache, stream=stream, auth=auth)
+                                    files=files, cache=cache, stream=stream, auth=auth, json=json)
 
         if (time.time() - start_time) >= self.TIMEOUT:
             raise TimeoutError("Timeout limit of {} exceeded.".format(self.TIMEOUT))
@@ -270,7 +271,7 @@ class ServiceAPI(BaseQuery):
             params[prop] = value
         catalogs_request.extend(self._build_catalogs_params(params))
         # response = self._request('POST', request_url, data=catalogs_request, headers=headers)
-        response = self._request('POST', request_url, data=json.dumps(params), headers=headers)
+        response = self._request('POST', request_url, headers=headers, json=params)
         return response
 
     def _build_catalogs_params(self, params):

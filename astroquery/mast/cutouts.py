@@ -88,7 +88,8 @@ def _parse_cutout_size(size):
     else:
         raise InvalidQueryError("Cutout size must be in pixels or angular quantity.")
 
-    return {"x": x, "y": y, "units": units}
+    # x and y need to be json serializable
+    return {"x": int(x), "y": int(y), "units": units}
 
 
 class TesscutClass(MastQueryWithLogin):
@@ -102,8 +103,8 @@ class TesscutClass(MastQueryWithLogin):
 
         super().__init__()
 
-        services = {"sector": {"path": "sector/"},
-                    "astrocut": {"path": "astrocut/"}}
+        services = {"sector": {"path": "sector"},
+                    "astrocut": {"path": "astrocut"}}
         self._service_api_connection.set_service_params(services, "fastapi/tesscut")
 
     def get_sectors(self, coordinates=None, radius=0.2*u.deg, objectname=None):
@@ -217,7 +218,7 @@ class TesscutClass(MastQueryWithLogin):
         if sector:
             astrocut_request += "&sector={}".format(sector)
 
-        astrocut_url = self._service_api_connection.REQUEST_URL + "astrocut/?" + astrocut_request
+        astrocut_url = self._service_api_connection.REQUEST_URL + "astrocut?" + astrocut_request
         zipfile_path = "{}tesscut_{}.zip".format(path, time.strftime("%Y%m%d%H%M%S"))
         self._download_file(astrocut_url, zipfile_path)
 
