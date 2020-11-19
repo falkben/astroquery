@@ -270,8 +270,7 @@ class ServiceAPI(BaseQuery):
         for prop, value in kwargs.items():
             params[prop] = value
         catalogs_request.extend(self._build_catalogs_params(params))
-        # response = self._request('POST', request_url, data=catalogs_request, headers=headers)
-        response = self._request('POST', request_url, headers=headers, json=params)
+        response = self._request('POST', request_url, data=catalogs_request, headers=headers)
         return response
 
     def _build_catalogs_params(self, params):

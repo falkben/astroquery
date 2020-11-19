@@ -89,7 +89,7 @@ def _parse_cutout_size(size):
         raise InvalidQueryError("Cutout size must be in pixels or angular quantity.")
 
     # x and y need to be json serializable
-    return {"x": int(x), "y": int(y), "units": units}
+    return {"x": x, "y": y, "units": units}
 
 
 class TesscutClass(MastQueryWithLogin):
